@@ -102,6 +102,18 @@ else ifeq ($(platform), miyoo)
    SHARED := -shared -Wl,-version-script=link.T -Wl,-no-undefined
    CFLAGS += -march=armv5te -mtune=arm926ej-s
    CFLAGS += -fomit-frame-pointer -ffast-math  
+
+# XYDDS
+else ifeq ($(platform), xydds)
+   TARGET := $(TARGET_NAME)_libretro.so
+   CC = /opt/xydds/usr/bin/arm-linux-gcc
+   CXX = /opt/xydds/usr/bin/arm-linux-g++
+   AR = /opt/xydds/usr/bin/arm-linux-ar
+   fpic := -fPIC
+   SHARED := -shared -Wl,-version-script=link.T -Wl,-no-undefined
+   CFLAGS += -marm -mfpu=neon-vfpv4 -mfloat-abi=hard
+   CFLAGS += -fomit-frame-pointer -ffast-math
+   CFLAGS += -DARM -mcpu=cortex-a7
    
 # iOS
 else ifneq (,$(findstring ios,$(platform)))
